@@ -1,0 +1,44 @@
+# Copies the workshop Starship config into place on Windows and hooks it into PowerShell
+# Windows Terminal settings are merged by hand, see the README
+# Usage (from the repo folder): powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
+$ErrorActionPreference = 'Stop'
+
+$RepoDir = Split-Path -Parent $PSScriptRoot
+$Timestamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+
+function Write-Step($Message) { Write-Host "==> $Message" -ForegroundColor Magenta }
+function Write-Warn($Message) { Write-Host "[!] $Message" -ForegroundColor Yellow }
+
+# Copy src to dest, backing up whatever is already there
+function Install-File($Source, $Destination) {
+    if (-not (Test-Path $Source)) {
+        throw "Missing $Source, is the repo cloned fully?"
+    }
+    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $Destination) | Out-Null
+    if (Test-Path $Destination) {
+        Copy-Item $Destination "$Destination.bak-$Timestamp"
+        Write-Step "Backed up $Destination -> $Destination.bak-$Timestamp"
+    }
+    Copy-Item $Source $Destination
+    Write-Step "Installed $Destination"
+}
+
+Install-File (Join-Path $RepoDir 'starship\starship.toml') (Join-Path $HOME '.config\starship.toml')
+
+if (-not (Get-Command starship -ErrorAction SilentlyContinue)) {
+    Write-Warn 'starship is not installed yet, run: winget install --id Starship.Starship  then rerun this'
+    exit 0
+}
+
+# Add the starship init line to the PowerShell profile if it is not there yet
+if (-not (Test-Path $PROFILE)) {
+    New-Item -ItemType File -Force -Path $PROFILE | Out-Null
+}
+if (Select-String -Path $PROFILE -Pattern 'starship init' -Quiet) {
+    Write-Step "Starship already hooked in $PROFILE"
+} else {
+    Add-Content -Path $PROFILE -Value "`n# Starship prompt`nInvoke-Expression (&starship init powershell)"
+    Write-Step "Added starship init to $PROFILE"
+}
+
+Write-Step 'Done! Open a new Windows Terminal tab to see it'

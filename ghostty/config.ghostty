@@ -1,0 +1,45 @@
+# Ghostty base config for the Customize Your Coding Environment workshop
+# Location (mac + linux): ~/.config/ghostty/config.ghostty
+# Reload after editing: ctrl+shift+, (linux) or cmd+shift+, (mac)
+# Every option: ghostty +show-config --default --docs
+
+# Font
+# Swap for any Nerd Font you have installed, try "Iosevka Nerd Font"
+font-family = JetBrainsMono Nerd Font
+font-size = 14
+
+# Theme
+# Browse themes with a live preview: ghostty +list-themes
+# Follows your OS light/dark mode, use a single name to pin one
+theme = light:Catppuccin Latte,dark:Catppuccin Mocha
+
+# Window look
+background-opacity = 0.92
+background-blur = true
+window-padding-x = 12
+window-padding-y = 10
+window-padding-balance = true
+window-padding-color = extend
+
+# Cursor
+cursor-style = bar
+cursor-style-blink = true
+mouse-hide-while-typing = true
+
+# Mac only, ignored on linux
+macos-titlebar-style = tabs
+macos-option-as-alt = true
+
+# Quality of life
+copy-on-select = clipboard
+confirm-close-surface = false
+shell-integration-features = cursor,title,sudo
+
+# Keybinds, format is trigger=action
+# Defaults already split with ctrl+shift+o (right) and ctrl+shift+e (down)
+# These add vim style hjkl movement between splits
+# See every default bind: ghostty +list-keybinds --default
+keybind = ctrl+alt+h=goto_split:left
+keybind = ctrl+alt+j=goto_split:down
+keybind = ctrl+alt+k=goto_split:up
+keybind = ctrl+alt+l=goto_split:right
