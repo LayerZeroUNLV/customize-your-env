@@ -80,7 +80,7 @@ fc-cache -f
 
 ```sh
 # TODO: Swap in the real URL once this is pushed
-git clone https://github.com/layer-zero-unlv/customize-your-env.git
+git clone https://github.com/LayerZeroUnlv/customize-your-env.git
 cd customize-your-env
 ```
 
