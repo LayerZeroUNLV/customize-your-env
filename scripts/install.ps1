@@ -30,6 +30,14 @@ if (-not (Get-Command starship -ErrorAction SilentlyContinue)) {
     exit 0
 }
 
+# Windows blocks profile scripts by default, so the starship line would never run
+# RemoteSigned for just this user lets local scripts run, no admin needed
+$Policy = Get-ExecutionPolicy -Scope CurrentUser
+if ($Policy -eq 'Undefined' -or $Policy -eq 'Restricted') {
+    Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
+    Write-Step "Set PowerShell execution policy to RemoteSigned for $env:USERNAME so your profile can load"
+}
+
 # Add the starship init line to the PowerShell profile if it is not there yet
 if (-not (Test-Path $PROFILE)) {
     New-Item -ItemType File -Force -Path $PROFILE | Out-Null

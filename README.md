@@ -128,6 +128,7 @@ This is the fun part, try stuff and see what you like.
 | More / less see through | `background-opacity =` (0 to 1)                                | `"opacity":` (0 to 100)                                                                                       | n/a                                                |
 | Add space around text   | `window-padding-x/y =`                                         | `"padding":`                                                                                                  | `add_newline =`                                    |
 | Change the cursor       | `cursor-style =` (block, bar, underline)                       | `"cursorShape":`                                                                                              | `[character]` symbols                              |
+| Background image        | Uncomment the `background-image` lines, full path, PNG/JPEG    | Settings → Defaults → Appearance → **Background image**, or `"backgroundImage"` + `"backgroundImageOpacity"` | n/a                                                |
 
 Reload Ghostty with `ctrl+shift+,` on Linux or `cmd+shift+,` on mac. Windows Terminal and Starship reload on save.
 

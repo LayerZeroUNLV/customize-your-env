@@ -21,6 +21,14 @@ window-padding-y = 10
 window-padding-balance = true
 window-padding-color = extend
 
+# Background image, delete the # in front of these lines to turn it on
+# PNG or JPEG only, use a full path, ~ does not work here
+# Keep the opacity low so you can still read your text
+# background-image = /home/you/Pictures/wallpaper.png
+# background-image-opacity = 0.15
+# background-image-fit = cover
+# background-image-position = center
+
 # Cursor
 cursor-style = bar
 cursor-style-blink = true
