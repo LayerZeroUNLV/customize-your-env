@@ -11,6 +11,20 @@ TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 log() { printf '\033[1;35m==>\033[0m %s\n' "$1"; }
 warn() { printf '\033[1;33m[!]\033[0m %s\n' "$1" >&2; }
 
+# Remember what was there before the first install so reset.sh can put it back
+# Only runs once, later installs leave the record alone
+record_original() {
+  local dest="$1"
+  if [[ -e "$dest.original" || -e "$dest.original-none" ]]; then
+    return 0
+  fi
+  if [[ -e "$dest" ]]; then
+    cp "$dest" "$dest.original"
+  else
+    touch "$dest.original-none"
+  fi
+}
+
 # Copy src to dest, backing up whatever is already there
 install_file() {
   local src="$1" dest="$2"
@@ -19,6 +33,7 @@ install_file() {
     return 1
   fi
   mkdir -p "$(dirname "$dest")"
+  record_original "$dest"
   if [[ -e "$dest" ]]; then
     cp "$dest" "$dest.bak-$TIMESTAMP"
     log "Backed up $dest -> $dest.bak-$TIMESTAMP"

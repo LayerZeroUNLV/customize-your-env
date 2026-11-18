@@ -59,7 +59,7 @@ fc-cache -f
 | OS              | Command                                                              |
 | --------------- | -------------------------------------------------------------------- |
 | Windows 11      | Already installed, search "Terminal"                                 |
-| Windows 10      | `winget install --id Microsoft.WindowsTerminal`                      |
+| Windows 10      | `winget install --id Microsoft.WindowsTerminal --source winget`                      |
 | macOS           | `brew install --cask ghostty`                                        |
 | Arch            | `sudo pacman -S ghostty`                                             |
 | Fedora          | `sudo dnf copr enable scottames/ghostty && sudo dnf install ghostty` |
@@ -71,7 +71,7 @@ fc-cache -f
 
 | OS          | Command                                         |
 | ----------- | ----------------------------------------------- |
-| Windows     | `winget install --id Starship.Starship`         |
+| Windows     | `winget install --id Starship.Starship --source winget`         |
 | macOS       | `brew install starship`                         |
 | Arch        | `sudo pacman -S starship`                       |
 | Other Linux | `curl -sS https://starship.rs/install.sh \| sh` |
@@ -133,6 +133,25 @@ This is the fun part, try stuff and see what you like.
 Reload Ghostty with `ctrl+shift+,` on Linux or `cmd+shift+,` on mac. Windows Terminal and Starship reload on save.
 
 Every Ghostty option with docs: `ghostty +show-config --default --docs`
+
+## Reset
+
+Want to start over, or just want your old setup back? The install scripts remember what you had before the first run, so these put it back.
+
+```sh
+# macOS / Linux
+./scripts/reset.sh
+```
+
+```powershell
+# Windows, add -ResetTerminal to also wipe Windows Terminal back to stock
+powershell -ExecutionPolicy Bypass -File .\scripts\reset.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\reset.ps1 -ResetTerminal
+```
+
+Whatever you have right now gets saved as `*.reset-<timestamp>` first, so you can grab your tweaks back. Fonts and installed apps are left alone.
+
+> `--source winget` on the winget commands skips the Microsoft Store source, which fails with a certificate error on some networks (like campus wifi).
 
 ## Resources
 
